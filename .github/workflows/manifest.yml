@@ -1,0 +1,7 @@
+applications:
+  - name: CI-CD
+memory: 256M
+path: build/
+buildpack: staticfile_buildpack 
+routes:
+  - route: CI-CD.au-syd.cf.appdomain.cloud
