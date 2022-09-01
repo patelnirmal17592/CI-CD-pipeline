@@ -31,10 +31,16 @@ jobs:
       - name: Build
         run: npm run build --if-present
 
-      - name: Run the tests and generate coverage report
-        run: npm run test
-
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/node@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --sarif-file-output=snyk.sarif
+      - name: Upload result to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: snyk.sarif
+
+      - name: Deploy current App
+        run: ibmcloud app push
