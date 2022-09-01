@@ -31,7 +31,7 @@ function HomeContent() {
         }}
       >
         <strong>
-          New Zealand's{" "}
+          Auckland's{" "}
           <span style={{ color: "#0076be" }}>
             <em>largest </em>
           </span>{" "}

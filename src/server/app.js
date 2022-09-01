@@ -1,3 +1,4 @@
+const helmet = require('helmet');
 const express = require('express')
 const cors = require('cors')
 const app = express();
@@ -6,10 +7,9 @@ const DiscoveryV2 = require('ibm-watson/discovery/v2');
 const { IamAuthenticator } = require('ibm-watson/auth');
 const bodyParser = require('body-parser')
 const escape = require('lodash.escape')
-const helmet = require('helmet');
 
-app.use(cors());
 app.use(helmet());
+app.use(cors());
 app.use(express.limit('10mb'));
 app.use(bodyParser.json({
   type: 'application/json'

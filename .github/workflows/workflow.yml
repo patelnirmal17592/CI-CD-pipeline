@@ -40,5 +40,14 @@ jobs:
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
+    - name: Deploy to cloud
+      uses: ibmcloud cf push
+      commands:
+        - echo 'App is deployed'
+      when:
+        condition:
+          - ${{ if ne(uses, 'true')}}:
+            - echo 'Success!'
+
 
 
