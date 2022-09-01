@@ -6,12 +6,15 @@ const multer = require('multer')
 const cors = require('cors')
 const helmet = require('helmet');
 const csurf = require('csurf')
+const expressSanitizer = require('express-sanitizer');
+
 
 var csrfProtection = csurf({ cookie: true })
 
 
 const corsOrigin = 'http://localhost:3000';
 
+app.use(expressSanitizer());
 app.use(express.static(__dirname + '../..'))
 app.use(express.limit('10mb'));
 app.use(helmet());
@@ -39,7 +42,7 @@ const imageUpload = multer({storage: storage})
 
 app.post("/car", csrfProtection, imageUpload.array('file'), (req, res) => {
 
-  let uploadedFilePath = req.files[0].destination + '/' + req.files[0].originalname
+  let uploadedFilePath = req.sanitize.files[0].destination + '/' + req.files[0].originalname;
 
   console.log('Request: ', uploadedFilePath)
 
@@ -55,7 +58,7 @@ app.post("/car", csrfProtection, imageUpload.array('file'), (req, res) => {
     keyFilename: "./carrecognizer-359522-41396db63726.json",
   });
 
-  const content = fs.readFileSync(filePath);
+  const content = fs.readFileSync.sanitize(filePath);
 
   async function predict() {
 

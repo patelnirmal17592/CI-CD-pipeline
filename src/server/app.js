@@ -8,9 +8,12 @@ const { IamAuthenticator } = require('ibm-watson/auth');
 const bodyParser = require('body-parser')
 const escape = require('lodash.escape')
 const csurf = require('csurf')
+var sanitizer = require('sanitizer');
+const expressSanitizer = require('express-sanitizer');
 
 var csrfProtection = csurf({ cookie: true })
 
+app.use(expressSanitizer());
 app.use(helmet());
 app.use(cors());
 app.use(express.limit('10mb'));
@@ -24,7 +27,7 @@ const projectId = process.env.PROJECTID;
 
 app.post('/car-insurance', csrfProtection, (req, res) => {
 
-  console.log('Request is made with input: ', req.body.data)
+  console.log('Request is made with input: ', req.sanitize.body.data)
 
   const discovery = new DiscoveryV2({
     version: version,
@@ -33,9 +36,11 @@ app.post('/car-insurance', csrfProtection, (req, res) => {
     }),
     serviceUrl: process.env.URL,
   });
+
+  const sanitized = sanitizer.sanitize(req.sanitize.body.data);
   
   const parameters = {
-      naturalLanguageQuery: `${req.body.data}`,
+      naturalLanguageQuery: `${sanitized}`,
       projectId : `${projectId}`,
       count: 3
   }
