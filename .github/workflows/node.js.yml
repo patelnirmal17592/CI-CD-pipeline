@@ -25,6 +25,8 @@ jobs:
       
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3.1.0
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
     
     - name: Setup Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
