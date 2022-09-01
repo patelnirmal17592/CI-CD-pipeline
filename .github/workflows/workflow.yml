@@ -41,7 +41,7 @@ jobs:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
     - name: Deploy to cloud
-      uses: ibmcloud cf push
+      run: ibmcloud cf push
 
 
 
