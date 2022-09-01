@@ -5,6 +5,7 @@ const dotenv = require('dotenv').config({ path: '../../env/.env'})
 const DiscoveryV2 = require('ibm-watson/discovery/v2');
 const { IamAuthenticator } = require('ibm-watson/auth');
 const bodyParser = require('body-parser')
+const escape = require('lodash.escape')
 
 app.use(cors());
 app.use(bodyParser.json({
@@ -34,7 +35,7 @@ app.post('/car-insurance', (req, res) => {
   }
   
   discovery.query(parameters)
-    .then(response => res.send(response.result.results))
+    .then(response => res.send.escape(response.result.results))
     .catch(err => {
       console.log('error:', err);
     });
