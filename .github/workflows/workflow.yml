@@ -37,15 +37,11 @@ jobs:
 
     - name: Run Snyk to check for vulnerabilities
       uses: snyk/actions/node@master
-      commands:
-        - echo "Test done!"
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
     - name: Deploy to cloud
       uses: ibmcloud cf push
-      commands:
-        - echo 'App is deployed'
 
 
 
