@@ -4,10 +4,17 @@ const dotenv = require("dotenv").config({ path: "../../ENV/.env" });
 const bodyParser = require('body-parser')
 const multer = require('multer')
 const cors = require('cors')
+const helmet = require('helmet');
+const csurf = require('csurf')
+
+var csrfProtection = csurf({ cookie: true })
+
 
 const corsOrigin = 'http://localhost:3000';
 
 app.use(express.static(__dirname + '../..'))
+app.use(express.limit('10mb'));
+app.use(helmet());
 app.use(cors({
   origin: [corsOrigin],
   methods: ['POST'],
@@ -30,7 +37,7 @@ const storage = multer.diskStorage({
 
 const imageUpload = multer({storage: storage})
 
-app.post("/car", imageUpload.array('file'), (req, res) => {
+app.post("/car", csrfProtection, imageUpload.array('file'), (req, res) => {
 
   let uploadedFilePath = req.files[0].destination + '/' + req.files[0].originalname
 
