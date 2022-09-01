@@ -6,8 +6,11 @@ const DiscoveryV2 = require('ibm-watson/discovery/v2');
 const { IamAuthenticator } = require('ibm-watson/auth');
 const bodyParser = require('body-parser')
 const escape = require('lodash.escape')
+const helmet = require('helmet');
 
 app.use(cors());
+app.use(helmet());
+app.use(express.limit('10mb'));
 app.use(bodyParser.json({
   type: 'application/json'
 }));
@@ -35,7 +38,7 @@ app.post('/car-insurance', (req, res) => {
   }
   
   discovery.query(parameters)
-    .then(response => res.send.escape(response.result.results))
+    .then(response => res.send(escape(response.result.results)))
     .catch(err => {
       console.log('error:', err);
     });
