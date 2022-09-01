@@ -38,6 +38,3 @@ jobs:
         uses: snyk/actions/node@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-
-      - name: Deploy to cloud
-        run: ibmcloud cf push
