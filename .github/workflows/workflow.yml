@@ -44,10 +44,6 @@ jobs:
       uses: ibmcloud cf push
       commands:
         - echo 'App is deployed'
-      when:
-        condition:
-          - ${{ if ne(uses, 'true')}}:
-            - echo 'Success!'
 
 
 
