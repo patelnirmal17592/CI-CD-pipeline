@@ -43,4 +43,4 @@ jobs:
           sarif_file: snyk.sarif
 
       - name: Deploy current App
-        run: ibmcloud app push
+        run: cf push
